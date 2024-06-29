@@ -1,0 +1,18 @@
+body{
+    background-color: red;
+}
+
+#rect{
+    width: 90%;
+    height: 700px;
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: rgb(207, 213, 146);
+}
+
+.box_1{
+    width: 90%;
+    height: 500px;
+    background-color: lightyellow;
+}
+
