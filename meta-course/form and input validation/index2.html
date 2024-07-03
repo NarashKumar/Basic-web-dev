@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation and Submission Example</title>
+  <script>
+    function validateForm() {
+      // Validate radio buttons
+      let radios = document.getElementsByName('gender');
+      let radioChecked = false;
+      for (let radio of radios) {
+        if (radio.checked) {
+          radioChecked = true;
+          break;
+        }
+      }
+      if (!radioChecked) {
+        alert('Please select an option.');
+        return false;
+      }
+
+      // Validate checkboxes
+      let checkboxes = document.getElementsByName('veggies');
+      let checkboxChecked = false;
+      for (let checkbox of checkboxes) {
+        if (checkbox.checked) {
+          checkboxChecked = true;
+          break;
+        }
+      }
+      if (!checkboxChecked) {
+        alert('Please select at least one checkbox.');
+        return false;
+      }
+
+      return true; // Allow form submission if validation passes
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      if (!validateForm()) {
+        return; // If validation fails, do not proceed
+      }
+
+      // storing in local storage just for the example
+      // Collect form data
+      let formData = new FormData(event.target);
+      let data = {};
+      for (let [key, value] of formData.entries()) {
+        if (data[key]) {
+          if (Array.isArray(data[key])) {
+            data[key].push(value);
+          } else {
+            data[key] = [data[key], value];
+          }
+        } else {
+          data[key] = value;
+        }
+      }
+
+      // Store data in local storage
+      for (let key in data) {
+        localStorage.setItem(key, JSON.stringify(data[key]));
+      }
+
+      alert('Form data has been saved to local storage.');
+    }
+    
+
+  </script>
+</head>
+<body>
+  <form id="myForm" onsubmit="handleFormSubmit(event)">
+    <p>Choose an option:</p>
+    <label for="male">Male</label>
+    <input type="radio" id="male" name="gender" value="male">
+    
+    <label for="female">female</label>
+    <input type="radio" id="female" name="gender" value="female">
+    
+    <label for="other">Other</label>
+    <input type="radio" id="other" name="gender" value="other">
+    
+    <p>Check at least one:</p>
+    <label for="tomato">Tomato</label>
+    <input type="checkbox" id="tomato" name="veggies" value="tomato">
+    
+    <label for="potato">Potato</label>
+    <input type="checkbox" id="potato" name="veggies" value="potato">
+    
+    <label for="carrot">Carrot</label>
+    <input type="checkbox" id="carrot" name="veggies" value="carrot">
+    
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
